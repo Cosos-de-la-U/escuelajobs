@@ -16,7 +16,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
+// Stop adding services to the container
 
+// Build app
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
