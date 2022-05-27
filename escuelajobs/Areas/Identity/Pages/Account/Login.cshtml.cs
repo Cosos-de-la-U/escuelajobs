@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using escuelajobs.Data;
+using System.Security.Claims;
 
 namespace escuelajobs.Areas.Identity.Pages.Account
 {
@@ -112,7 +113,28 @@ namespace escuelajobs.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                
+                var user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError(String.Empty, "Login invalido");
+                    return Page();
+                }
+                //Login original
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    var claims = new Claim[]
+                    { 
+                        new Claim("amr", "pwd"),
+                        new Claim("EmployeeNumber", "1")
+                    };
+
+                    await _signInManager.SignInWithClaimsAsync(user, Input.RememberMe, claims);
+
+                    _logger.LogInformation("User logged in.");
+                    return LocalRedirect(returnUrl);
+                }
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

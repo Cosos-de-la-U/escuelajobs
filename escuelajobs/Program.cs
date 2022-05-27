@@ -16,12 +16,30 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));;
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 // Stop adding services to the container
+
+
+//Autorizacion
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("EmployeeOnly", policy =>
+        policy.RequireClaim("EmployeeNumber"));
+    //Admin
+    options.AddPolicy("RequireAdmin", policy =>
+        policy.RequireClaim("Administrator"));
+    //Alumno
+    options.AddPolicy("RequireAlumno", policy =>
+        policy.RequireClaim("Alumno"));
+    //Docente
+    options.AddPolicy("RequireDocente", policy =>
+        policy.RequireClaim("Docente"));
+});
 
 // Build app
 var app = builder.Build();
