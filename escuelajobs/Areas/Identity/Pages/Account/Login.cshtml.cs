@@ -114,6 +114,7 @@ namespace escuelajobs.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 
+                //Find the user searching for the email
                 var user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
                 if (user == null)
                 {
@@ -124,11 +125,21 @@ namespace escuelajobs.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var claims = new Claim[]
+                    var claims = new List<Claim>
                     { 
                         new Claim("amr", "pwd"),
                         new Claim("EmployeeNumber", "1")
                     };
+
+                    // Getting the role of the username
+                    var roles = await _signInManager.UserManager.GetRolesAsync(user);
+
+                    if (roles.Any())
+                    {
+                        //"Manager,User"
+                        var roleClaim = string.Join(",", roles);
+                        claims.Add(new Claim("Roles", roleClaim));
+                    }
 
                     await _signInManager.SignInWithClaimsAsync(user, Input.RememberMe, claims);
 
