@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using escuelajobs.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace escuelajobs.Controllers
 {
@@ -19,6 +20,7 @@ namespace escuelajobs.Controllers
         }
 
         // GET: Alumno
+        [Authorize(Policy = "RequireAlumno")]
         public async Task<IActionResult> Index()
         {
               return _context.Alumnos != null ? 

@@ -10,5 +10,15 @@ namespace escuelajobs.Controllers
         {
             return View();
         }
+        [Authorize(Policy = "RequireAdmin")]
+        public IActionResult Admin()
+        {
+            return View();
+        }
+        [Authorize(Policy = "RequireAlumno")]
+        public IActionResult Alumno()
+        {
+            return View();
+        }
     }
 }

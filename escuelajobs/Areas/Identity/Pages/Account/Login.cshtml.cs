@@ -128,7 +128,6 @@ namespace escuelajobs.Areas.Identity.Pages.Account
                     var claims = new List<Claim>
                     { 
                         new Claim("amr", "pwd"),
-                        new Claim("EmployeeNumber", "1")
                     };
 
                     // Getting the role of the username
