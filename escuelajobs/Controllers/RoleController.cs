@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using escuelajobs.Core;
 
 namespace escuelajobs.Controllers
 {
     public class RoleController : Controller
     {
-        [Authorize(Policy = "EmployeeOnly")]
+        [Authorize(Roles = $"{Constans.Roles.Administrator}")]
         public IActionResult Index()
         {
             return View();

@@ -6,92 +6,90 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using escuelajobs.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace escuelajobs.Controllers
 {
-    [Authorize( Roles = "Administrator")]
-    public class AlumnoController : Controller
+    public class DocentesController : Controller
     {
         private readonly datosContext _context;
 
-        public AlumnoController(datosContext context)
+        public DocentesController(datosContext context)
         {
             _context = context;
         }
 
-        // GET: Alumno
+        // GET: Docentes
         public async Task<IActionResult> Index()
         {
-              return _context.Alumnos != null ? 
-                          View(await _context.Alumnos.ToListAsync()) :
-                          Problem("Entity set 'datosContext.Alumnos'  is null.");
+              return _context.Docentes != null ? 
+                          View(await _context.Docentes.ToListAsync()) :
+                          Problem("Entity set 'datosContext.Docentes'  is null.");
         }
 
-        // GET: Alumno/Details/5
+        // GET: Docentes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Alumnos == null)
+            if (id == null || _context.Docentes == null)
             {
                 return NotFound();
             }
 
-            var alumno = await _context.Alumnos
-                .FirstOrDefaultAsync(m => m.AlumnoId == id);
-            if (alumno == null)
+            var docente = await _context.Docentes
+                .FirstOrDefaultAsync(m => m.DocenteId == id);
+            if (docente == null)
             {
                 return NotFound();
             }
 
-            return View(alumno);
+            return View(docente);
         }
 
-        // GET: Alumno/Create
+        // GET: Docentes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Alumno/Create
+        // POST: Docentes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlumnoId,Nombres,Apellidos,Sexo,FecNac,UsuarioId")] Alumno alumno)
+        public async Task<IActionResult> Create([Bind("DocenteId,Nombres,Apellidos,Sexo,FecNac,UsuarioId,Role")] Docente docente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(alumno);
+                _context.Add(docente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(alumno);
+            return View(docente);
         }
 
-        // GET: Alumno/Edit/5
+        // GET: Docentes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Alumnos == null)
+            if (id == null || _context.Docentes == null)
             {
                 return NotFound();
             }
 
-            var alumno = await _context.Alumnos.FindAsync(id);
-            if (alumno == null)
+            var docente = await _context.Docentes.FindAsync(id);
+            if (docente == null)
             {
                 return NotFound();
             }
-            return View(alumno);
+            return View(docente);
         }
 
-        // POST: Alumno/Edit/5
+        // POST: Docentes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlumnoId,Nombres,Apellidos,Sexo,FecNac,UsuarioId")] Alumno alumno)
+        public async Task<IActionResult> Edit(int id, [Bind("DocenteId,Nombres,Apellidos,Sexo,FecNac,UsuarioId,Role")] Docente docente)
         {
-            if (id != alumno.AlumnoId)
+            if (id != docente.DocenteId)
             {
                 return NotFound();
             }
@@ -100,12 +98,12 @@ namespace escuelajobs.Controllers
             {
                 try
                 {
-                    _context.Update(alumno);
+                    _context.Update(docente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AlumnoExists(alumno.AlumnoId))
+                    if (!DocenteExists(docente.DocenteId))
                     {
                         return NotFound();
                     }
@@ -116,49 +114,49 @@ namespace escuelajobs.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(alumno);
+            return View(docente);
         }
 
-        // GET: Alumno/Delete/5
+        // GET: Docentes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Alumnos == null)
+            if (id == null || _context.Docentes == null)
             {
                 return NotFound();
             }
 
-            var alumno = await _context.Alumnos
-                .FirstOrDefaultAsync(m => m.AlumnoId == id);
-            if (alumno == null)
+            var docente = await _context.Docentes
+                .FirstOrDefaultAsync(m => m.DocenteId == id);
+            if (docente == null)
             {
                 return NotFound();
             }
 
-            return View(alumno);
+            return View(docente);
         }
 
-        // POST: Alumno/Delete/5
+        // POST: Docentes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Alumnos == null)
+            if (_context.Docentes == null)
             {
-                return Problem("Entity set 'datosContext.Alumnos'  is null.");
+                return Problem("Entity set 'datosContext.Docentes'  is null.");
             }
-            var alumno = await _context.Alumnos.FindAsync(id);
-            if (alumno != null)
+            var docente = await _context.Docentes.FindAsync(id);
+            if (docente != null)
             {
-                _context.Alumnos.Remove(alumno);
+                _context.Docentes.Remove(docente);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AlumnoExists(int id)
+        private bool DocenteExists(int id)
         {
-          return (_context.Alumnos?.Any(e => e.AlumnoId == id)).GetValueOrDefault();
+          return (_context.Docentes?.Any(e => e.DocenteId == id)).GetValueOrDefault();
         }
     }
 }

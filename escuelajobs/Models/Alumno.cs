@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 
 namespace escuelajobs.Models
 {
+    [Authorize(Roles = "Administrator,Alumno,Docente")]
     public partial class Alumno
     {
         public Alumno()
