@@ -18,6 +18,7 @@ namespace escuelajobs.Models
         public string? UsuarioId { get; set; }
         public int? Role { get; set; }
 
+        public virtual AspNetUser? Usuario { get; set; }
         public virtual ICollection<NonimaDocente> NonimaDocentes { get; set; }
     }
 }

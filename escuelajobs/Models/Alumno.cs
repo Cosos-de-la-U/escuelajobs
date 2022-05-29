@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace escuelajobs.Models
 {
-    [Authorize(Roles = "Administrator,Alumno,Docente")]
     public partial class Alumno
     {
         public Alumno()
@@ -20,6 +18,7 @@ namespace escuelajobs.Models
         public DateTime? FecNac { get; set; }
         public string? UsuarioId { get; set; }
 
+        public virtual AspNetUser? Usuario { get; set; }
         public virtual ICollection<NonimaAlumno> NonimaAlumnos { get; set; }
         public virtual ICollection<Notum> Nota { get; set; }
     }

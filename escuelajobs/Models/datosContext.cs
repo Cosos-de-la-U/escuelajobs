@@ -61,6 +61,11 @@ namespace escuelajobs.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.UsuarioId).HasMaxLength(450);
+
+                entity.HasOne(d => d.Usuario)
+                    .WithMany(p => p.Alumnos)
+                    .HasForeignKey(d => d.UsuarioId)
+                    .HasConstraintName("FK__Alumno__UsuarioI__1AD3FDA4");
             });
 
             modelBuilder.Entity<AspNetRole>(entity =>
@@ -91,7 +96,15 @@ namespace escuelajobs.Models
                     .IsUnique()
                     .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
+                entity.Property(e => e.Apellidos)
+                    .HasMaxLength(255)
+                    .HasDefaultValueSql("(N'')");
+
                 entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.Nombres)
+                    .HasMaxLength(255)
+                    .HasDefaultValueSql("(N'')");
 
                 entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
 
@@ -186,6 +199,11 @@ namespace escuelajobs.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.UsuarioId).HasMaxLength(450);
+
+                entity.HasOne(d => d.Usuario)
+                    .WithMany(p => p.Docentes)
+                    .HasForeignKey(d => d.UsuarioId)
+                    .HasConstraintName("FK__Docente__Usuario__19DFD96B");
             });
 
             modelBuilder.Entity<Grado>(entity =>
