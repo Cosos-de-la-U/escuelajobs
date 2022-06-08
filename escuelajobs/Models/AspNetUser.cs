@@ -7,11 +7,13 @@ namespace escuelajobs.Models
     {
         public AspNetUser()
         {
-            Alumnos = new HashSet<Alumno>();
             AspNetUserClaims = new HashSet<AspNetUserClaim>();
             AspNetUserLogins = new HashSet<AspNetUserLogin>();
             AspNetUserTokens = new HashSet<AspNetUserToken>();
-            Docentes = new HashSet<Docente>();
+            NonimaAlumnos = new HashSet<NonimaAlumno>();
+            NonimaDocentes = new HashSet<NonimaDocente>();
+            NotumAlumnos = new HashSet<Notum>();
+            NotumDocentes = new HashSet<Notum>();
             Roles = new HashSet<AspNetRole>();
         }
 
@@ -33,11 +35,13 @@ namespace escuelajobs.Models
         public string Apellidos { get; set; } = null!;
         public string Nombres { get; set; } = null!;
 
-        public virtual ICollection<Alumno> Alumnos { get; set; }
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
-        public virtual ICollection<Docente> Docentes { get; set; }
+        public virtual ICollection<NonimaAlumno> NonimaAlumnos { get; set; }
+        public virtual ICollection<NonimaDocente> NonimaDocentes { get; set; }
+        public virtual ICollection<Notum> NotumAlumnos { get; set; }
+        public virtual ICollection<Notum> NotumDocentes { get; set; }
 
         public virtual ICollection<AspNetRole> Roles { get; set; }
     }

@@ -16,7 +16,6 @@ namespace escuelajobs.Models
         {
         }
 
-        public virtual DbSet<Alumno> Alumnos { get; set; } = null!;
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; } = null!;
         public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; } = null!;
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; } = null!;
@@ -24,7 +23,6 @@ namespace escuelajobs.Models
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; } = null!;
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; } = null!;
         public virtual DbSet<Calificacion> Calificacions { get; set; } = null!;
-        public virtual DbSet<Docente> Docentes { get; set; } = null!;
         public virtual DbSet<Grado> Grados { get; set; } = null!;
         public virtual DbSet<Materium> Materia { get; set; } = null!;
         public virtual DbSet<NonimaAlumno> NonimaAlumnos { get; set; } = null!;
@@ -42,32 +40,6 @@ namespace escuelajobs.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Alumno>(entity =>
-            {
-                entity.ToTable("Alumno");
-
-                entity.Property(e => e.Apellidos)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FecNac).HasColumnType("date");
-
-                entity.Property(e => e.Nombres)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Sexo)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UsuarioId).HasMaxLength(450);
-
-                entity.HasOne(d => d.Usuario)
-                    .WithMany(p => p.Alumnos)
-                    .HasForeignKey(d => d.UsuarioId)
-                    .HasConstraintName("FK__Alumno__UsuarioI__1AD3FDA4");
-            });
-
             modelBuilder.Entity<AspNetRole>(entity =>
             {
                 entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
@@ -180,32 +152,6 @@ namespace escuelajobs.Models
                 entity.Property(e => e.CalificacionUno).HasColumnType("decimal(18, 4)");
             });
 
-            modelBuilder.Entity<Docente>(entity =>
-            {
-                entity.ToTable("Docente");
-
-                entity.Property(e => e.Apellidos)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FecNac).HasColumnType("date");
-
-                entity.Property(e => e.Nombres)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Sexo)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UsuarioId).HasMaxLength(450);
-
-                entity.HasOne(d => d.Usuario)
-                    .WithMany(p => p.Docentes)
-                    .HasForeignKey(d => d.UsuarioId)
-                    .HasConstraintName("FK__Docente__Usuario__19DFD96B");
-            });
-
             modelBuilder.Entity<Grado>(entity =>
             {
                 entity.ToTable("Grado");
@@ -219,83 +165,86 @@ namespace escuelajobs.Models
             modelBuilder.Entity<Materium>(entity =>
             {
                 entity.HasKey(e => e.MateriaId)
-                    .HasName("PK__Materia__0D019DE12AEB6080");
+                    .HasName("PK__Materia__0D019DE1F0AB7A68");
 
                 entity.Property(e => e.Materia)
-                    .HasMaxLength(100)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
             });
 
             modelBuilder.Entity<NonimaAlumno>(entity =>
             {
                 entity.HasKey(e => e.NominaAlumnoId)
-                    .HasName("PK__NonimaAl__C5F2B1F0A425DBD9");
+                    .HasName("PK__NonimaAl__C5F2B1F094DE9035");
 
                 entity.ToTable("NonimaAlumno");
+
+                entity.Property(e => e.AlumnoId).HasMaxLength(450);
 
                 entity.HasOne(d => d.Alumno)
                     .WithMany(p => p.NonimaAlumnos)
                     .HasForeignKey(d => d.AlumnoId)
-                    .HasConstraintName("FK__NonimaAlu__Alumn__1332DBDC");
+                    .HasConstraintName("FK__NonimaAlu__Alumn__367C1819");
 
                 entity.HasOne(d => d.Grado)
                     .WithMany(p => p.NonimaAlumnos)
                     .HasForeignKey(d => d.GradoId)
-                    .HasConstraintName("FK__NonimaAlu__Grado__14270015");
+                    .HasConstraintName("FK__NonimaAlu__Grado__2BFE89A6");
             });
 
             modelBuilder.Entity<NonimaDocente>(entity =>
             {
                 entity.HasKey(e => e.NominaDocenteId)
-                    .HasName("PK__NonimaDo__F6B7B4D94A5DD2B7");
+                    .HasName("PK__NonimaDo__F6B7B4D93471A396");
 
                 entity.ToTable("NonimaDocente");
+
+                entity.Property(e => e.DocenteId).HasMaxLength(450);
 
                 entity.HasOne(d => d.Docente)
                     .WithMany(p => p.NonimaDocentes)
                     .HasForeignKey(d => d.DocenteId)
-                    .HasConstraintName("FK__NonimaDoc__Docen__10566F31");
+                    .HasConstraintName("FK__NonimaDoc__Docen__3587F3E0");
 
                 entity.HasOne(d => d.Grado)
                     .WithMany(p => p.NonimaDocentes)
                     .HasForeignKey(d => d.GradoId)
-                    .HasConstraintName("FK__NonimaDoc__Grado__123EB7A3");
+                    .HasConstraintName("FK__NonimaDoc__Grado__2B0A656D");
 
                 entity.HasOne(d => d.Materia)
                     .WithMany(p => p.NonimaDocentes)
                     .HasForeignKey(d => d.MateriaId)
-                    .HasConstraintName("FK__NonimaDoc__Mater__114A936A");
+                    .HasConstraintName("FK__NonimaDoc__Mater__2A164134");
             });
 
             modelBuilder.Entity<Notum>(entity =>
             {
                 entity.HasKey(e => e.NotaId)
-                    .HasName("PK__Nota__EF36CC1A185D6565");
+                    .HasName("PK__Nota__EF36CC1ACF17F673");
+
+                entity.Property(e => e.AlumnoId).HasMaxLength(450);
+
+                entity.Property(e => e.DocenteId).HasMaxLength(450);
 
                 entity.HasOne(d => d.Alumno)
-                    .WithMany(p => p.Nota)
+                    .WithMany(p => p.NotumAlumnos)
                     .HasForeignKey(d => d.AlumnoId)
-                    .HasConstraintName("FK__Nota__AlumnoId__151B244E");
+                    .HasConstraintName("FK__Nota__AlumnoId__339FAB6E");
 
                 entity.HasOne(d => d.Calificacion)
                     .WithMany(p => p.Nota)
                     .HasForeignKey(d => d.CalificacionId)
-                    .HasConstraintName("FK__Nota__Calificaci__18EBB532");
+                    .HasConstraintName("FK__Nota__Calificaci__2DE6D218");
 
                 entity.HasOne(d => d.Docente)
-                    .WithMany(p => p.Nota)
+                    .WithMany(p => p.NotumDocentes)
                     .HasForeignKey(d => d.DocenteId)
-                    .HasConstraintName("FK__Nota__DocenteId__160F4887");
+                    .HasConstraintName("FK__Nota__DocenteId__3493CFA7");
 
                 entity.HasOne(d => d.Grado)
                     .WithMany(p => p.Nota)
                     .HasForeignKey(d => d.GradoId)
-                    .HasConstraintName("FK__Nota__GradoId__17F790F9");
-
-                entity.HasOne(d => d.Materia)
-                    .WithMany(p => p.Nota)
-                    .HasForeignKey(d => d.MateriaId)
-                    .HasConstraintName("FK__Nota__MateriaId__17036CC0");
+                    .HasConstraintName("FK__Nota__GradoId__2EDAF651");
             });
 
             OnModelCreatingPartial(modelBuilder);

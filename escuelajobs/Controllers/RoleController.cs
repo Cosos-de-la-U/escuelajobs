@@ -6,17 +6,17 @@ namespace escuelajobs.Controllers
 {
     public class RoleController : Controller
     {
-        [Authorize(Roles = $"{Constans.Roles.Administrator}")]
+        //[Authorize(Roles = $"{Constans.Roles.Alumno}")]
         public IActionResult Index()
         {
             return View();
         }
-        [Authorize(Policy = "RequireAdmin")]
+        //[Authorize(Policy = "RequireAdmin")]
         public IActionResult Admin()
         {
             return View();
         }
-        [Authorize(Policy = "RequireAlumno")]
+        //[Authorize(Policy = "RequireAlumno")]
         public IActionResult Alumno()
         {
             return View();
