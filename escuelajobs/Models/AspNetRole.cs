@@ -1,12 +1,17 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace escuelajobs.Models
 {
     public partial class AspNetRole
     {
-        public AspNetRole()
+        private readonly datosContext _context;
+
+        //Agregando DI
+        public AspNetRole(datosContext context)
         {
+            _context = context;
             AspNetRoleClaims = new HashSet<AspNetRoleClaim>();
             Users = new HashSet<AspNetUser>();
         }
@@ -19,5 +24,11 @@ namespace escuelajobs.Models
         public virtual ICollection<AspNetRoleClaim> AspNetRoleClaims { get; set; }
 
         public virtual ICollection<AspNetUser> Users { get; set; }
+
+        public async Task<List<String>> ObtenerRoles()
+        {
+            return await (from Roles in _context.AspNetRoles
+                          select Roles.Name).ToListAsync();
+        }
     }
 }

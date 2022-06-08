@@ -1,49 +1,61 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registrar";
 }
 
-<h1>@ViewData["Title"]</h1>
+
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 mt-4">
+        <h1>@ViewData["Title"]</h1>
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <div class="form-floating m-2">
                 <input asp-for="Input.Nombres" class="form-control" autocomplete="Nombres" aria-required="true" />
                 <label asp-for="Input.Nombres"></label>
                 <span asp-validation-for="Input.Nombres" class="text-danger"></span>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <div class="form-floating m-2">
                 <input asp-for="Input.Apellidos" class="form-control" autocomplete="Apellidos" aria-required="true" />
                 <label asp-for="Input.Apellidos"></label>
                 <span asp-validation-for="Input.Apellidos" class="text-danger"></span>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+            <div class="form-floating m-2">
+                <input asp-for="Input.Email" class="form-control" autocomplete="Correo" aria-required="true" />
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+            <div class="form-floating m-2">
+                <input asp-for="Input.Password" class="form-control" autocomplete="Contraseña" aria-required="true" />
                 <label asp-for="Input.Password"></label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+            <div class="form-floating m-2">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="Contraseña" aria-required="true" />
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+            <div class="m-2">
+            <select asp-for="Input.Roles" class="p-3 form-select form-select-sm" autocomplete="Roles" aria-required="true">  
+                 <optgroup label="Roles">
+                     <option value="">Alumno</option> 
+                     <option value="">Docente</option>
+                     <option value="">Administrator</option>
+                 <optgroup/>
+            </select>
+                <span asp-validation-for="Input.Roles" class="text-danger"></span>
+            </div>
+
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrar</button>
         </form>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-          
+    <div class="col-md-6 mt-5">
+        <section class="vh-80">
+                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw1.webp" class="img-fluid mt-5" alt="Sample image">
         </section>
     </div>
 </div>
