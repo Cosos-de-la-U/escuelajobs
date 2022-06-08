@@ -6,7 +6,6 @@ namespace escuelajobs.Data
     {
         public String Nombres { get; set; }
         public String Apellidos { get; set; }
-        public String Roles { get; set; }
 
     }
 }

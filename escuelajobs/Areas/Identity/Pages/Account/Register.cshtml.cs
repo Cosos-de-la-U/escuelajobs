@@ -106,10 +106,10 @@ namespace escuelajobs.Areas.Identity.Pages.Account
             [Display(Name = "Contraseña")]
             public string Password { get; set; }
 
-            [Required]
+            /*[Required]
             [Display(Name = "Roles")]
             public string Roles { get; set; }
-
+            */
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -119,13 +119,6 @@ namespace escuelajobs.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "Las contraseñas no coinciden.")]
             public string ConfirmPassword { get; set; }
         }
-        public async Task<String> ObtenerRoleId(string RoleUsuario)
-        {
-            return await (from Roles in _context.AspNetRoles
-                          where Roles.Name == RoleUsuario
-                          select Roles.Id).FirstOrDefaultAsync();
-        }
-
 
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -144,9 +137,6 @@ namespace escuelajobs.Areas.Identity.Pages.Account
                 //Agregando nombre y apellido
                 user.Nombres = Input.Nombres;
                 user.Apellidos = Input.Apellidos;
-                user.Roles = Input.Roles;
-
-                
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -157,7 +147,6 @@ namespace escuelajobs.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
-
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

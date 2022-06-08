@@ -22,6 +22,7 @@ namespace escuelajobs.Models
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; } = null!;
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; } = null!;
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; } = null!;
+        public virtual DbSet<AspNetUserRole> AspNetUserRole { get; set; } = null!;
         public virtual DbSet<Calificacion> Calificacions { get; set; } = null!;
         public virtual DbSet<Grado> Grados { get; set; } = null!;
         public virtual DbSet<Materium> Materia { get; set; } = null!;
@@ -58,6 +59,12 @@ namespace escuelajobs.Models
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.AspNetRoleClaims)
                     .HasForeignKey(d => d.RoleId);
+            });
+
+            // AspNetUserRole
+            modelBuilder.Entity<AspNetUserRole>(entity =>
+            {
+
             });
 
             modelBuilder.Entity<AspNetUser>(entity =>
