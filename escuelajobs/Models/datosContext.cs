@@ -245,6 +245,11 @@ namespace escuelajobs.Models
                     .WithMany(p => p.Nota)
                     .HasForeignKey(d => d.GradoId)
                     .HasConstraintName("FK__Nota__GradoId__2EDAF651");
+
+                entity.HasOne(d => d.Materia)
+                    .WithMany(p => p.Nota)
+                    .HasForeignKey(d => d.MateriaId)
+                    .HasConstraintName("FK__Nota__MateriaId__37703C52");
             });
 
             OnModelCreatingPartial(modelBuilder);

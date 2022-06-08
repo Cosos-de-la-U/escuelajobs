@@ -16,5 +16,6 @@ namespace escuelajobs.Models
         public virtual Calificacion? Calificacion { get; set; }
         public virtual AspNetUser? Docente { get; set; }
         public virtual Grado? Grado { get; set; }
+        public virtual Materium? Materia { get; set; }
     }
 }
